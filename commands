@@ -1,0 +1,25 @@
+[kamailio]
+name=Kamailio - latest - Packages for the Kamailio latest release
+baseurl=https://rpm.kamailio.org/centos/7/5.4/5.4/x86_64/
+enabled=1
+metadata_expire=30d
+repo_gpgcheck=1
+gpgkey=https://rpm.kamailio.org/rpm-pub.key
+type=rpm
+skip_if_unavailable=True
+
+
+yum install kamailio kamailio-presence kamailio-mysql kamailio-ims kamailio-websocket kamailio-tls kamailio-debuginfo kamailio-xmpp kamailio-unixodbc kamailio-utils kamailio-outbound kamailio-gzcompress
+
+###history:
+yum -y update && yum -y groupinstall core && yum -y groupinstall base && yum -y install epel-release
+yum -y install httpd mysql-server php php-mysql php-gd php-curl
+
+iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -m state --state NEW -m udp -p udp --dport 5060 -j ACCEPT
+
+vi /etc/yum.repos.d/kamailio.repo
+
+yum install kamailio kamailio-presence kamailio-mysql kamailio-ims kamailio-mysql kamailio-websocket kamailio-tls kamailio-mysql kamailio-debuginfo kamailio-xmpp kamailio-unixodbc kamailio-utils kamailio-tls kamailio-outbound kamailio-gzcompress
+
+kamailio -V
